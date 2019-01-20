@@ -4,6 +4,7 @@ import {
   FETCH_SURVEY_FAIL,
   GO_TO_NEXT_QUETION,
   GO_TO_PREVIOUS_QUETION,
+  UPDATE_ANSWER,
 } from '../util/constants';
 import { IActionType } from '../actions/survey.actions';
 
@@ -22,6 +23,7 @@ export interface ISurveyQuestion {
   multiple: boolean;
   choices: [IChoices];
   jumps: [];
+  answer: any;
 }
 
 export interface ISurveyState {
@@ -66,6 +68,11 @@ export default function (state = initialState, action: IActionType): ISurveyStat
       return Object.assign({}, state, {
         currentQuestionIndex: action.payload.currentQuestionIndex,
       });
+    case UPDATE_ANSWER:
+      state.survey[action.payload.currentIndex].answer = action.payload.input;
+      return Object.assign({}, state, {
+        survey: state.survey,
+      })
     default:
       return initialState;
   }

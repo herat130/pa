@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { surveyFetch, surveyStart } from '../actions/survey.actions';
-import { ISurveyState } from '../reducers/survey.reducer';
+import { surveyFetch, surveyStart, updateAnswer, geToNextQuestion, geToPreviousQuestion } from '../actions/survey.actions';
+import { ISurveyState, ISurveyQuestion } from '../reducers/survey.reducer';
 import { Dispatch } from 'redux';
 import { IActionType } from '../actions/survey.actions';
 import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
@@ -10,6 +10,9 @@ interface ISurveyMapStateToProps extends ISurveyState { }
 
 interface ISurveyMapStateToDispatch {
   surveyFetch: () => void;
+  updateAnswer: (input: any, curentIndex: number) => void;
+  goToPrevious: (index: number) => void;
+  goToNext: (index: number) => void;
 }
 
 interface IOwnProps {
@@ -24,15 +27,63 @@ class Survey extends React.Component<ISurveyProps, any> {
     this.props.surveyFetch();
   }
 
+  updateAnswer = (event: any) => {
+    const { currentQuestionIndex } = this.props;
+    const input = event.target.value;
+    this.props.updateAnswer(input, currentQuestionIndex);
+  }
+
   displayCurrentQuetion = () => {
     const { survey, currentQuestionIndex } = this.props;
-    const currentQuestion: IAnswerProps = survey[currentQuestionIndex] || '';
+    const currentQuestion: ISurveyQuestion = survey[currentQuestionIndex] || '';
+    const answerProps: IAnswerProps = {
+      ...currentQuestion,
+      updateAnswer: this.updateAnswer,
+    }
     return (
       <React.Fragment>
         <p>{currentQuestion.question}</p>
-        <AnswerComponent {...currentQuestion} />
+        <AnswerComponent {...answerProps} />
       </React.Fragment>
     )
+  }
+
+  goToPrevious = () => {
+    const { currentQuestionIndex } = this.props;
+    this.props.goToPrevious(currentQuestionIndex - 1);
+  }
+
+  goToNext = () => {
+    const { currentQuestionIndex } = this.props;
+    this.props.goToNext(currentQuestionIndex + 1);
+  }
+
+  previousBtn() {
+    const { currentQuestionIndex } = this.props;
+    if (currentQuestionIndex === 0) {
+      return false;
+    }
+    return (
+      <button
+        onClick={this.goToPrevious}
+      >
+        Previous
+      </button>
+    );
+  }
+
+  nextBtn() {
+    const { survey, currentQuestionIndex } = this.props;
+    if ((survey.length - 1) === currentQuestionIndex) {
+      return false;
+    }
+    return (
+      <button
+        onClick={this.goToNext}
+      >
+        Next
+      </button>
+    );
   }
 
   render() {
@@ -44,7 +95,11 @@ class Survey extends React.Component<ISurveyProps, any> {
       return <p>Has Error</p>
     }
     return (
-      <p>{this.displayCurrentQuetion()}</p>
+      <React.Fragment>
+        {this.displayCurrentQuetion()}
+        {this.previousBtn()}
+        {this.nextBtn()}
+      </React.Fragment>
     )
   }
 }
@@ -66,7 +121,10 @@ const mapStateToDispatch = (dispatch: Dispatch<IActionType>): ISurveyMapStateToD
       dispatch(surveyStart());
       surveyFetch()
         .then(action => dispatch(action));
-    }
+    },
+    updateAnswer: (input, curentIndex) => dispatch(updateAnswer(input, curentIndex)),
+    goToNext: (index: number) => { dispatch(geToNextQuestion(index)) },
+    goToPrevious: (index: number) => { dispatch(geToPreviousQuestion(index)) },
   }
 }
 

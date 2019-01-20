@@ -5,6 +5,7 @@ import {
   FETCH_SURVEY_FAIL,
   GO_TO_NEXT_QUETION,
   GO_TO_PREVIOUS_QUETION,
+  UPDATE_ANSWER,
 } from '../util/constants';
 import { ISurveyQuestion } from '../reducers/survey.reducer';
 
@@ -59,3 +60,10 @@ export const geToPreviousQuestion = (currentQuestionIndex: number): IActionType 
     payload: { currentQuestionIndex },
   };
 };
+
+export const updateAnswer = (input: any, currentIndex: number) => {
+  return {
+    type: UPDATE_ANSWER,
+    payload: { input, currentIndex }
+  }
+}
