@@ -7,6 +7,12 @@ import {
 } from '../util/constants';
 import { IActionType } from '../actions/survey.actions';
 
+export interface IChoices {
+  label: string;
+  value: string;
+  selected: boolean;
+}
+
 export interface ISurveyQuestion {
   question_type: string;
   identifier: string;
@@ -14,7 +20,7 @@ export interface ISurveyQuestion {
   description: string;
   required: boolean;
   multiple: boolean;
-  choices: [];
+  choices: [IChoices];
   jumps: [];
 }
 

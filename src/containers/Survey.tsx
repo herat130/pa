@@ -4,6 +4,7 @@ import { surveyFetch, surveyStart } from '../actions/survey.actions';
 import { ISurveyState } from '../reducers/survey.reducer';
 import { Dispatch } from 'redux';
 import { IActionType } from '../actions/survey.actions';
+import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
 
 interface ISurveyMapStateToProps extends ISurveyState { }
 
@@ -25,10 +26,11 @@ class Survey extends React.Component<ISurveyProps, any> {
 
   displayCurrentQuetion = () => {
     const { survey, currentQuestionIndex } = this.props;
-    const currentQuestion = survey[currentQuestionIndex || 0] || '';
+    const currentQuestion: IAnswerProps = survey[currentQuestionIndex] || '';
     return (
       <React.Fragment>
         <p>{currentQuestion.question}</p>
+        <AnswerComponent {...currentQuestion} />
       </React.Fragment>
     )
   }
