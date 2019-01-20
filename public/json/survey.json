@@ -1,5 +1,5 @@
 {
-  "questionnaire": {
+  "surveyDetails": {
     "id": 40,
     "identifier": "ewBzTS",
     "name": "Privathaftpflichtversicherung",
@@ -7,7 +7,7 @@
       {
         "question_type": "text",
         "identifier": "list_12110962",
-        "headline": "Whats your name?",
+        "question": "Whats your name?",
         "description": null,
         "required": true,
         "multiple": false,
@@ -17,7 +17,7 @@
       {
         "question_type": "text",
         "identifier": "list_12111610",
-        "headline": "Whats your age?",
+        "question": "Whats your age?",
         "description": null,
         "required": false,
         "multiple": false,
@@ -27,7 +27,7 @@
       {
         "question_type": "multiple-choice",
         "identifier": "list_12111777",
-        "headline": "Gender?",
+        "question": "Gender?",
         "description": null,
         "required": false,
         "multiple": false,
@@ -76,7 +76,7 @@
       {
         "question_type": "multiple-choice",
         "identifier": "list_12110966",
-        "headline": "Male Hobbies?",
+        "question": "Male Hobbies?",
         "description": null,
         "required": true,
         "multiple": true,
@@ -97,7 +97,7 @@
       {
         "question_type": "multiple-choice",
         "identifier": "list_12110966",
-        "headline": "Fe-Male Hobbies?",
+        "question": "Fe-Male Hobbies?",
         "description": null,
         "required": true,
         "multiple": true,
@@ -123,7 +123,7 @@
       {
         "question_type": "multiple-choice",
         "identifier": "list_12110966",
-        "headline": "Inrested in party",
+        "question": "Inrested in party",
         "description": null,
         "required": true,
         "multiple": false,

@@ -1,5 +1,5 @@
-export const  fetchWrapper= (url, method = 'GET', data) =>{
-  const fetchConfig = {
+export const fetchWrapper = (url: string, method = 'GET', data?: any) => {
+  const fetchConfig: any = {
     method,
     body: JSON.stringify(data),
     headers: {
