@@ -21,7 +21,7 @@ export interface ISurveyQuestion {
   description: string;
   required: boolean;
   multiple: boolean;
-  choices: [IChoices];
+  choices: IChoices[];
   jumps: [];
   answer: any;
 }
@@ -69,10 +69,35 @@ export default function (state = initialState, action: IActionType): ISurveyStat
         currentQuestionIndex: action.payload.currentQuestionIndex,
       });
     case UPDATE_ANSWER:
-      state.survey[action.payload.currentIndex].answer = action.payload.input;
+      const currentIndex = action.payload.currentIndex;
+      let currentQuestion = state.survey[action.payload.currentIndex] || {};
+      if (currentQuestion.question_type === 'text') {
+        currentQuestion.answer = action.payload.input;
+      }
+      if (currentQuestion.question_type === 'multiple-choice') {
+        let choices;
+        if (currentQuestion.multiple) {
+          choices = (currentQuestion.choices || []).map(v => {
+            if (v.label == action.payload.input) {
+              return Object.assign({}, v, { selected: true })
+            }
+            return v;
+          });
+        }
+        if (!currentQuestion.multiple) {
+          choices = (currentQuestion.choices || []).map(v => {
+            if (v.label == action.payload.input) {
+              return Object.assign({}, v, { selected: true });
+            }
+            return Object.assign({}, v, { selected: false });
+          });
+        }
+        currentQuestion = Object.assign({}, currentQuestion, { choices: choices });
+      }
+      state.survey[currentIndex] = currentQuestion;
       return Object.assign({}, state, {
-        survey: state.survey,
-      })
+        survey: Object.assign({}, state.survey),
+      });
     default:
       return initialState;
   }

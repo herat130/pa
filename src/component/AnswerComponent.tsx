@@ -21,25 +21,36 @@ export default class AnswerComponent extends React.Component<IAnswerProps, any> 
     )
   }
 
-  renderMultipleChoice() {
-
-  }
-
-  renderSingleChoice() {
-
+  renderChoice(multiple: boolean) {
+    const { choices } = this.props;
+    return choices.map(v => {
+      return (
+        <div key={v.label}>
+          <input
+            type={multiple ? "checkbox" : "radio"}
+            key={v.label}
+            id={v.label}
+            value={v.value}
+            checked={v.selected}
+            onChange={this.props.updateAnswer}
+          />
+          <label
+            htmlFor={v.label}
+          >
+            {v.label}
+          </label>
+        </div>
+      )
+    });
   }
 
   renderAnswerBox() {
     const { question_type, multiple } = this.props;
-    if (question_type == 'text') {
+    if (question_type === 'text') {
       return this.renderTextField();
     }
-    if (question_type == 'multiple-choice') {
-      if (multiple) {
-        //checkbox
-      } else {
-        // radio
-      }
+    if (question_type === 'multiple-choice') {
+      return this.renderChoice(multiple);
     }
   }
 

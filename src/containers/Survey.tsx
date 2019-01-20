@@ -74,12 +74,14 @@ class Survey extends React.Component<ISurveyProps, any> {
 
   nextBtn() {
     const { survey, currentQuestionIndex } = this.props;
+    const currentQuestion = survey[currentQuestionIndex] || {};
     if ((survey.length - 1) === currentQuestionIndex) {
       return false;
     }
     return (
       <button
         onClick={this.goToNext}
+        // disabled={currentQuestion.re quired && !(currentQuestion.answer)}
       >
         Next
       </button>
@@ -87,8 +89,8 @@ class Survey extends React.Component<ISurveyProps, any> {
   }
 
   render() {
-    const { loading, error } = this.props;
-    if (loading) {
+    const { loading, error, survey } = this.props;
+    if (loading || survey.length === 0) {
       return <p>Fetching...</p>
     }
     if (error) {
