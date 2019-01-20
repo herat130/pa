@@ -99,7 +99,7 @@ export default function (state = initialState, action: IActionType): ISurveyStat
       }
       state.survey[currentIndex] = currentQuestion;
       return Object.assign({}, state, {
-        survey: Object.assign({}, state.survey),
+        survey: Object.assign([], state.survey),
       });
     default:
       return initialState;
