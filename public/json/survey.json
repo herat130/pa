@@ -19,7 +19,7 @@
         "identifier": "list_12111610",
         "question": "Whats your age?",
         "description": null,
-        "required": false,
+        "required": true,
         "multiple": false,
         "choices": [],
         "jumps": []
@@ -29,7 +29,7 @@
         "identifier": "list_12111777",
         "question": "Gender?",
         "description": null,
-        "required": false,
+        "required": true,
         "multiple": false,
         "choices": [
           {

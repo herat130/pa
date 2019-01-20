@@ -81,7 +81,7 @@ class Survey extends React.Component<ISurveyProps, any> {
     return (
       <button
         onClick={this.goToNext}
-        // disabled={currentQuestion.re quired && !(currentQuestion.answer)}
+        disabled={currentQuestion.required && !(currentQuestion.answer)}
       >
         Next
       </button>

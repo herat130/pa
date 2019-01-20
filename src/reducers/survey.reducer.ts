@@ -69,17 +69,17 @@ export default function (state = initialState, action: IActionType): ISurveyStat
         currentQuestionIndex: action.payload.currentQuestionIndex,
       });
     case UPDATE_ANSWER:
+      let choices;
       const currentIndex = action.payload.currentIndex;
       let currentQuestion = state.survey[action.payload.currentIndex] || {};
       if (currentQuestion.question_type === 'text') {
         currentQuestion.answer = action.payload.input;
       }
       if (currentQuestion.question_type === 'multiple-choice') {
-        let choices;
         if (currentQuestion.multiple) {
           choices = (currentQuestion.choices || []).map(v => {
             if (v.label == action.payload.input) {
-              return Object.assign({}, v, { selected: true })
+              return Object.assign({}, v, { selected: !v.selected })
             }
             return v;
           });
@@ -87,12 +87,15 @@ export default function (state = initialState, action: IActionType): ISurveyStat
         if (!currentQuestion.multiple) {
           choices = (currentQuestion.choices || []).map(v => {
             if (v.label == action.payload.input) {
-              return Object.assign({}, v, { selected: true });
+              return Object.assign({}, v, { selected: !v.selected });
             }
             return Object.assign({}, v, { selected: false });
           });
         }
-        currentQuestion = Object.assign({}, currentQuestion, { choices: choices });
+        currentQuestion = Object.assign({}, currentQuestion, {
+          answer: (choices || []).filter(v => v.selected).map(v => v.label).join(','),
+          choices: choices || [],
+        });
       }
       state.survey[currentIndex] = currentQuestion;
       return Object.assign({}, state, {
