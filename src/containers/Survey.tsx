@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { surveyFetch, surveyStart, updateAnswer, geToNextQuestion, geToPreviousQuestion } from '../actions/survey.actions';
 import { ISurveyState, ISurveyQuestion } from '../reducers/survey.reducer';
 import { Dispatch } from 'redux';
@@ -76,7 +77,11 @@ class Survey extends React.Component<ISurveyProps, any> {
     const { survey, currentQuestionIndex } = this.props;
     const currentQuestion = survey[currentQuestionIndex] || {};
     if ((survey.length - 1) === currentQuestionIndex) {
-      return false;
+      return (
+        <Link to={'/surveyDetails'}>
+          Details
+        </Link>
+      );
     }
     return (
       <button

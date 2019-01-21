@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Layout from './component/Layout';
 import ErrorComponent from './component/ErrorComponent';
 import Survey from './containers/Survey';
+import SurveyDetails from './containers/SurveyDetails';
 
 class App extends Component {
 
@@ -10,7 +12,10 @@ class App extends Component {
       <div className="App">
         <Layout>
           <ErrorComponent>
-            <Survey />
+            <Switch>
+              <Route exact path={'/'} component={Survey} />
+              <Route exact path={'/surveyDetails'} component={SurveyDetails} />
+            </Switch>
           </ErrorComponent>
         </Layout>
       </div>
