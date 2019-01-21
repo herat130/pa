@@ -1,0 +1,25 @@
+@import './variables';
+@import './grid.scss';
+.answer{
+  .multiple{    
+    border:1px solid $theme-gray-color;
+    transition: all .5s ease-in-out;    
+    background-image: linear-gradient(to left, transparent 50%, #e1bbf1 50%);
+    border: 1px dotted #ccc;
+    vertical-align: middle;
+    background-size: 200% 100%;
+    background-position: 100% top, 100% top;
+    &:hover{
+      background-position: 0% top, 0% top;
+      border:1px dotted $theme-pink-color;
+      color: #1c181d;
+    }
+    &.active{
+      background-color: lightsteelblue;
+    }
+    label{
+      @extend .column-11;
+      display: inline-block;
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import classnames from 'classnames';
+import '../assets/styles/answer.scss';
 import { ISurveyQuestion } from '../reducers/survey.reducer';
 
 export interface IAnswerProps extends ISurveyQuestion {
@@ -25,7 +27,7 @@ export default class AnswerComponent extends React.Component<IAnswerProps, any> 
     const { choices } = this.props;
     return choices.map(v => {
       return (
-        <div key={v.label}>
+        <div key={v.label} className={classnames('multiple', { active: v.selected })}>
           <input
             type={multiple ? "checkbox" : "radio"}
             key={v.label}
@@ -56,9 +58,9 @@ export default class AnswerComponent extends React.Component<IAnswerProps, any> 
 
   render() {
     return (
-      <React.Fragment>
+      <div className={classnames('answer')}>
         {this.renderAnswerBox()}
-      </React.Fragment>
+      </div>
     )
   }
 

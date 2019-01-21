@@ -9,7 +9,6 @@ import { IActionType } from '../actions/survey.actions';
 import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
 import ProgressBar, { IProgressBar } from '../component/ProgressBar';
 import { currentIndexFromIdentifier } from '../selectors/survey.selector';
-
 interface ISurveyMapStateToProps extends ISurveyState {
 
 }
@@ -102,7 +101,7 @@ class Survey extends React.Component<ISurveyProps, any> {
       currentQuestion: currentQuestionIndex,
     }
     return (
-      <div>
+      <div className={classnames('column-12')}>
         <ProgressBar {...ProgressBarProps} />
       </div>
     )
@@ -117,12 +116,12 @@ class Survey extends React.Component<ISurveyProps, any> {
       return <p>Has Error</p>
     }
     return (
-      <React.Fragment>
+      <div className={classnames('wrapper')}>
         {this.progressBar()}
         {this.displayCurrentQuetion()}
         {this.previousBtn()}
         {this.nextBtn()}
-      </React.Fragment>
+      </div>
     )
   }
 }

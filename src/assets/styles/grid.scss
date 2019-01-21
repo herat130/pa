@@ -1,0 +1,33 @@
+@import './variables';
+
+[class*='column-'] {
+	float: left;
+	width: 100%;
+	min-height: 1px; 
+}
+
+@media #{$breakpoint-medium} {
+	.wrapper {      
+		width: 100%;
+		height: 100%;
+		background-color:$landing-bg-color;
+	}
+	@for $i from 1 through $grid-columns {      
+	.column-#{$i} {         
+			width: 100% / $grid-columns * $i;   
+		}           
+	}   
+}
+
+@media #{$breakpoint-small} {
+	.wrapper {      
+		width: 100%;
+		height: 100%;  
+		background-color:$landing-bg-color;
+	}
+	@for $i from 1 through $grid-columns {      
+	.column-#{$i} {         
+			width: 100% / $grid-columns * $i;   
+		}           
+	}   
+}
