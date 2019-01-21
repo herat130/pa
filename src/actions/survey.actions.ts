@@ -48,6 +48,6 @@ export const surveyFail = (error: any): IActionType => {
 export const updateAnswer = (input: any, currentIndex: number) => {
   return {
     type: UPDATE_ANSWER,
-    payload: { input, currentIndex }
-  }
-}
+    payload: { input, currentIndex },
+  };
+};

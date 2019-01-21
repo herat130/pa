@@ -31,7 +31,7 @@ export interface ISurveyState {
   currentQuestionIndex: number;
 }
 
-const initialState: ISurveyState = {
+export const initialState: ISurveyState = {
   loading: false,
   error: false,
   survey: [],
