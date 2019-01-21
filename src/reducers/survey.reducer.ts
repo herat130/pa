@@ -2,8 +2,6 @@ import {
   FETCH_SURVEY_SUCESS,
   FETCH_SURVEY_FETCH_START,
   FETCH_SURVEY_FAIL,
-  GO_TO_NEXT_QUETION,
-  GO_TO_PREVIOUS_QUETION,
   UPDATE_ANSWER,
 } from '../util/constants';
 import { IActionType } from '../actions/survey.actions';
@@ -60,48 +58,44 @@ export default function (state = initialState, action: IActionType): ISurveyStat
         error: true,
         survey: null,
       });
-    case GO_TO_NEXT_QUETION:
-      return Object.assign({}, state, {
-        currentQuestionIndex: action.payload.currentQuestionIndex,
-      });
-    case GO_TO_PREVIOUS_QUETION:
-      return Object.assign({}, state, {
-        currentQuestionIndex: action.payload.currentQuestionIndex,
-      });
     case UPDATE_ANSWER:
-      let choices;
       const currentIndex = action.payload.currentIndex;
-      let currentQuestion = state.survey[action.payload.currentIndex] || {};
-      if (currentQuestion.question_type === 'text') {
-        currentQuestion.answer = action.payload.input;
-      }
-      if (currentQuestion.question_type === 'multiple-choice') {
-        if (currentQuestion.multiple) {
-          choices = (currentQuestion.choices || []).map(v => {
-            if (v.label == action.payload.input) {
-              return Object.assign({}, v, { selected: !v.selected })
-            }
-            return v;
-          });
-        }
-        if (!currentQuestion.multiple) {
-          choices = (currentQuestion.choices || []).map(v => {
-            if (v.label == action.payload.input) {
-              return Object.assign({}, v, { selected: !v.selected });
-            }
-            return Object.assign({}, v, { selected: false });
-          });
-        }
-        currentQuestion = Object.assign({}, currentQuestion, {
-          answer: (choices || []).filter(v => v.selected).map(v => v.label).join(','),
-          choices: choices || [],
-        });
-      }
-      state.survey[currentIndex] = currentQuestion;
+      state.survey[currentIndex] = updateAnswer(state, currentIndex, action);
       return Object.assign({}, state, {
         survey: Object.assign([], state.survey),
       });
     default:
       return initialState;
   }
+}
+
+const updateAnswer = (state: ISurveyState, currentIndex: number, action: IActionType) => {
+  let choices;
+  let currentQuestion = state.survey[currentIndex] || {};
+  if (currentQuestion.question_type === 'text') {
+    currentQuestion.answer = action.payload.input;
+  }
+  if (currentQuestion.question_type === 'multiple-choice') {
+    if (currentQuestion.multiple) {
+      choices = (currentQuestion.choices || []).map(v => {
+        if (v.label == action.payload.input) {
+          return Object.assign({}, v, { selected: !v.selected })
+        }
+        return v;
+      });
+    }
+    if (!currentQuestion.multiple) {
+      choices = (currentQuestion.choices || []).map(v => {
+        if (v.label == action.payload.input) {
+          return Object.assign({}, v, { selected: !v.selected });
+        }
+        return Object.assign({}, v, { selected: false });
+      });
+    }
+    currentQuestion = Object.assign({}, currentQuestion, {
+      answer: (choices || []).filter(v => v.selected).map(v => v.label).join(','),
+      choices: choices || [],
+    });
+  }
+  return Object.assign({}, currentQuestion);
 }

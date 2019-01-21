@@ -14,6 +14,7 @@ class App extends Component {
           <ErrorComponent>
             <Switch>
               <Route exact path={'/'} component={Survey} />
+              <Route exact path={'/survey/:identifier'} component={Survey} />
               <Route exact path={'/surveyDetails'} component={SurveyDetails} />
             </Switch>
           </ErrorComponent>

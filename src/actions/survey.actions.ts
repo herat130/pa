@@ -3,8 +3,6 @@ import {
   FETCH_SURVEY_SUCESS,
   FETCH_SURVEY_FETCH_START,
   FETCH_SURVEY_FAIL,
-  GO_TO_NEXT_QUETION,
-  GO_TO_PREVIOUS_QUETION,
   UPDATE_ANSWER,
 } from '../util/constants';
 import { ISurveyQuestion } from '../reducers/survey.reducer';
@@ -44,20 +42,6 @@ export const surveyFail = (error: any): IActionType => {
   return {
     type: FETCH_SURVEY_FAIL,
     payload: { error },
-  };
-};
-
-export const geToNextQuestion = (currentQuestionIndex: number): IActionType => {
-  return {
-    type: GO_TO_NEXT_QUETION,
-    payload: { currentQuestionIndex },
-  };
-};
-
-export const geToPreviousQuestion = (currentQuestionIndex: number): IActionType => {
-  return {
-    type: GO_TO_PREVIOUS_QUETION,
-    payload: { currentQuestionIndex },
   };
 };
 

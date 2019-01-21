@@ -1,32 +1,40 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { surveyFetch, surveyStart, updateAnswer, geToNextQuestion, geToPreviousQuestion } from '../actions/survey.actions';
+import { Link, withRouter } from 'react-router-dom';
+import classnames from 'classnames';
+import { surveyFetch, surveyStart, updateAnswer } from '../actions/survey.actions';
 import { ISurveyState, ISurveyQuestion } from '../reducers/survey.reducer';
 import { Dispatch } from 'redux';
 import { IActionType } from '../actions/survey.actions';
 import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
 import ProgressBar, { IProgressBar } from '../component/ProgressBar';
+import { currentIndexFromIdentifier } from '../selectors/survey.selector';
 
-interface ISurveyMapStateToProps extends ISurveyState { }
+interface ISurveyMapStateToProps extends ISurveyState {
+
+}
+
+interface SurveyRouterProps {
+  history?: any;
+  location?: any;
+  match?: any;
+}
 
 interface ISurveyMapStateToDispatch {
   surveyFetch: () => void;
   updateAnswer: (input: any, curentIndex: number) => void;
-  goToPrevious: (index: number) => void;
-  goToNext: (index: number) => void;
 }
 
-interface IOwnProps {
-
-}
-
-type ISurveyProps = ISurveyMapStateToProps & ISurveyMapStateToDispatch & IOwnProps;
+type ISurveyProps = ISurveyMapStateToProps & ISurveyMapStateToDispatch
+  & SurveyRouterProps;
 
 class Survey extends React.Component<ISurveyProps, any> {
 
   componentDidMount() {
-    this.props.surveyFetch();
+    const { survey } = this.props;
+    if (survey.length === 0) {
+      this.props.surveyFetch();
+    }
   }
 
   updateAnswer = (event: any) => {
@@ -50,33 +58,26 @@ class Survey extends React.Component<ISurveyProps, any> {
     )
   }
 
-  goToPrevious = () => {
-    const { currentQuestionIndex } = this.props;
-    this.props.goToPrevious(currentQuestionIndex - 1);
-  }
-
-  goToNext = () => {
-    const { currentQuestionIndex } = this.props;
-    this.props.goToNext(currentQuestionIndex + 1);
-  }
-
   previousBtn() {
-    const { currentQuestionIndex } = this.props;
+    const { currentQuestionIndex, survey } = this.props;
+    const currentQuestion = survey[currentQuestionIndex];
+    const prevQuestion = survey[currentQuestionIndex - 1];
     if (currentQuestionIndex === 0) {
       return false;
     }
     return (
-      <button
-        onClick={this.goToPrevious}
+      <Link
+        to={`/survey/${prevQuestion.identifier}`}
       >
         Previous
-      </button>
+      </Link>
     );
   }
 
   nextBtn() {
     const { survey, currentQuestionIndex } = this.props;
-    const currentQuestion = survey[currentQuestionIndex] || {};
+    const currentQuestion = survey[currentQuestionIndex];
+    const nextQuestion = survey[currentQuestionIndex + 1];
     if ((survey.length - 1) === currentQuestionIndex) {
       return (
         <Link to={'/surveyDetails'}>
@@ -85,12 +86,12 @@ class Survey extends React.Component<ISurveyProps, any> {
       );
     }
     return (
-      <button
-        onClick={this.goToNext}
-        disabled={currentQuestion.required && !(currentQuestion.answer)}
+      <Link
+        to={`/survey/${nextQuestion.identifier}`}
+        className={classnames({ 'disable': (currentQuestion.required && !(currentQuestion.answer)) })}
       >
         Next
-      </button>
+      </Link>
     );
   }
 
@@ -98,7 +99,7 @@ class Survey extends React.Component<ISurveyProps, any> {
     const { currentQuestionIndex, survey } = this.props;
     const ProgressBarProps: IProgressBar = {
       totalQuestions: survey.length,
-      currentQuestion: currentQuestionIndex + 1,
+      currentQuestion: currentQuestionIndex,
     }
     return (
       <div>
@@ -128,12 +129,13 @@ class Survey extends React.Component<ISurveyProps, any> {
 
 
 
-const mapStateToProps = (state: { surveyReducer: ISurveyState }, props: IOwnProps): ISurveyMapStateToProps => {
+const mapStateToProps = (state: { surveyReducer: ISurveyState }, props: any): ISurveyMapStateToProps => {
+  const identifier = props.match.params.identifier || '';
   return {
     loading: state.surveyReducer.loading,
     error: state.surveyReducer.error,
     survey: state.surveyReducer.survey,
-    currentQuestionIndex: state.surveyReducer.currentQuestionIndex,
+    currentQuestionIndex: currentIndexFromIdentifier(state, identifier),
   };
 };
 
@@ -145,9 +147,7 @@ const mapStateToDispatch = (dispatch: Dispatch<IActionType>): ISurveyMapStateToD
         .then(action => dispatch(action));
     },
     updateAnswer: (input, curentIndex) => dispatch(updateAnswer(input, curentIndex)),
-    goToNext: (index: number) => { dispatch(geToNextQuestion(index)) },
-    goToPrevious: (index: number) => { dispatch(geToPreviousQuestion(index)) },
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapStateToDispatch)(Survey);
+export default withRouter(connect(mapStateToProps, mapStateToDispatch)(Survey as any));

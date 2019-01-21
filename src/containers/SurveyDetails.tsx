@@ -10,7 +10,7 @@ class SurveyDetails extends React.Component<ISurveyMapStateToProps, any>{
     const { survey } = this.props;
     return survey.map(v => {
       return (
-        <div>
+        <div key={v.identifier}>
           <p>{v.question}</p>
           <p>{v.answer}</p>
         </div>
