@@ -1,0 +1,10 @@
+@import './variables';
+
+.progress-bar{
+  height:20px;
+  background: $theme-gray-color;
+  .progress{
+    height:20px;
+    background:$theme-pink-color;    
+  }
+}

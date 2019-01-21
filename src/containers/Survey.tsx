@@ -6,6 +6,7 @@ import { ISurveyState, ISurveyQuestion } from '../reducers/survey.reducer';
 import { Dispatch } from 'redux';
 import { IActionType } from '../actions/survey.actions';
 import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
+import ProgressBar, { IProgressBar } from '../component/ProgressBar';
 
 interface ISurveyMapStateToProps extends ISurveyState { }
 
@@ -93,6 +94,19 @@ class Survey extends React.Component<ISurveyProps, any> {
     );
   }
 
+  progressBar() {
+    const { currentQuestionIndex, survey } = this.props;
+    const ProgressBarProps: IProgressBar = {
+      totalQuestions: survey.length,
+      currentQuestion: currentQuestionIndex + 1,
+    }
+    return (
+      <div>
+        <ProgressBar {...ProgressBarProps} />
+      </div>
+    )
+  }
+
   render() {
     const { loading, error, survey } = this.props;
     if (loading || survey.length === 0) {
@@ -103,6 +117,7 @@ class Survey extends React.Component<ISurveyProps, any> {
     }
     return (
       <React.Fragment>
+        {this.progressBar()}
         {this.displayCurrentQuetion()}
         {this.previousBtn()}
         {this.nextBtn()}
