@@ -9,6 +9,7 @@ import { IActionType } from '../actions/survey.actions';
 import AnswerComponent, { IAnswerProps } from '../component/AnswerComponent';
 import ProgressBar, { IProgressBar } from '../component/ProgressBar';
 import { currentIndexFromIdentifier } from '../selectors/survey.selector';
+import '../assets/styles/survey.scss';
 interface ISurveyMapStateToProps extends ISurveyState {
 
 }
