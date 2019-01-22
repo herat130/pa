@@ -8,29 +8,32 @@ export const mockSurvey = {
         "question_type": "text",
         "identifier": "1",
         "question": "Whats your name?",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": false,
         "choices": [],
+        "answer":"",
         "jumps": []
       },
       {
         "question_type": "text",
         "identifier": "2",
         "question": "Whats your age?",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": false,
         "choices": [],
-        "jumps": []
+        "jumps": [],
+        "answer":""
       },
       {
         "question_type": "multiple-choice",
         "identifier": "3",
         "question": "Gender?",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": false,
+        "answer":"",
         "choices": [
           {
             "label": "Male",
@@ -54,9 +57,10 @@ export const mockSurvey = {
         "question_type": "multiple-choice",
         "identifier": "4",
         "question": "Male Hobbies?",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": true,
+        "answer":"",
         "choices": [
           {
             "label": "Gaming",
@@ -75,9 +79,10 @@ export const mockSurvey = {
         "question_type": "multiple-choice",
         "identifier": "5",
         "question": "Fe-Male Hobbies?",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": true,
+        "answer":"",
         "choices": [
           {
             "label": "Music",
@@ -101,9 +106,10 @@ export const mockSurvey = {
         "question_type": "multiple-choice",
         "identifier": "6",
         "question": "Inrested in party",
-        "description": null,
+        "description": "",
         "required": true,
         "multiple": false,
+        "answer":"",
         "choices": [
           {
             "label": "Yes",

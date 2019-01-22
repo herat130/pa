@@ -24,10 +24,10 @@ interface ISurveyMapStateToDispatch {
   updateAnswer: (input: any, curentIndex: number) => void;
 }
 
-type ISurveyProps = ISurveyMapStateToProps & ISurveyMapStateToDispatch
+export type ISurveyProps = ISurveyMapStateToProps & ISurveyMapStateToDispatch
   & SurveyRouterProps;
 
-class Survey extends React.Component<ISurveyProps, any> {
+export class Survey extends React.Component<ISurveyProps, any> {
 
   componentDidMount() {
     const { survey } = this.props;
@@ -67,6 +67,7 @@ class Survey extends React.Component<ISurveyProps, any> {
     return (
       <Link
         to={`/survey/${prevQuestion.identifier}`}
+        className="previous"
       >
         Previous
       </Link>
@@ -79,7 +80,10 @@ class Survey extends React.Component<ISurveyProps, any> {
     const nextQuestion = survey[currentQuestionIndex + 1];
     if ((survey.length - 1) === currentQuestionIndex) {
       return (
-        <Link to={'/surveyDetails'}>
+        <Link
+          to={'/surveyDetails'}
+          className="detailslink"
+        >
           Details
         </Link>
       );
@@ -87,7 +91,9 @@ class Survey extends React.Component<ISurveyProps, any> {
     return (
       <Link
         to={`/survey/${nextQuestion.identifier}`}
-        className={classnames({ 'disable': (currentQuestion.required && !(currentQuestion.answer)) })}
+        className={classnames('next', {
+          'disable': (currentQuestion.required && !(currentQuestion.answer))
+        })}
       >
         Next
       </Link>

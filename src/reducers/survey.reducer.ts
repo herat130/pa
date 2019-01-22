@@ -20,7 +20,7 @@ export interface ISurveyQuestion {
   required: boolean;
   multiple: boolean;
   choices: IChoices[];
-  jumps: [];
+  jumps: any;
   answer: any;
 }
 
