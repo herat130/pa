@@ -1,9 +1,13 @@
 @import './variables';
-@import './grid.scss';
+
 .answer{
+  .question{
+    color:$theme-pink-color;
+  }
   .multiple{    
+    height:30px; 
     border:1px solid $theme-gray-color;
-    transition: all .5s ease-in-out;    
+    transition: all .5s ease-in-out;       
     background-image: linear-gradient(to left, transparent 50%, #e1bbf1 50%);
     border: 1px dotted #ccc;
     vertical-align: middle;
@@ -18,8 +22,9 @@
       background-color: lightsteelblue;
     }
     label{
-      @extend .column-11;
+      // @extend .column-11;
       display: inline-block;
+      margin-bottom:0px !important;
     }
   }
 }

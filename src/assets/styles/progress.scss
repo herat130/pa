@@ -2,7 +2,7 @@
 
 .progress-bar{
   height:20px;
-  background: $theme-gray-color;
+  background: $theme-gray-color !important;
   .progress{
     height:20px;
     background:$theme-pink-color;    

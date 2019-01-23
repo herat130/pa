@@ -1,4 +1,15 @@
+@import './variables';
+
 .disable{
   pointer-events: none;
   color:gray;
+  background-color: gray !important;
+}
+
+.details{
+  border:1px solid $theme-pink-color;
+  .question{
+    color:$theme-pink-color;
+    font-size: 1em;      
+  }
 }

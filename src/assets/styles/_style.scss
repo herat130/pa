@@ -1,0 +1,23 @@
+@import './variables';
+
+.blank-space-50{
+  height:50px;
+  display: block;
+}
+.blank-space-20{
+  height:20px;
+  display: block;
+}
+
+.blank-space-10{
+  height:10px;
+  display: block;
+}
+
+.no-padding{
+  padding:0px !important;
+}
+
+input[type='text']{
+  border:1px solid $theme-gray-color;
+}

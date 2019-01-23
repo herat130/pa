@@ -1,0 +1,28 @@
+@import './variables';
+@import './style';
+
+.header{
+	height:60px;
+  background: $theme-pink-color;
+  .card{
+    color:#fff;
+    background: $theme-pink-color;
+  }
+}
+.footer{
+  position: absolute;
+  height:40px;
+  width:100%; 
+  color:#fff;
+	left: 0;
+  bottom: 0;
+  background: $theme-pink-color;
+  .copyright{
+    float: right;
+
+  }
+}
+.container{
+  max-height: 600px;
+  overflow-y:scroll;
+}
