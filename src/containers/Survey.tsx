@@ -52,7 +52,6 @@ export class Survey extends React.Component<ISurveyProps, any> {
     }
     return (
       <React.Fragment>
-        <p>{currentQuestion.question}</p>
         <AnswerComponent {...answerProps} />
       </React.Fragment>
     )
@@ -60,15 +59,15 @@ export class Survey extends React.Component<ISurveyProps, any> {
 
   previousBtn() {
     const { currentQuestionIndex, survey } = this.props;
-    const currentQuestion = survey[currentQuestionIndex];
-    const prevQuestion = survey[currentQuestionIndex - 1];
+    const currentQuestion = survey[currentQuestionIndex] || {};
+    const prevQuestion = survey[currentQuestionIndex - 1] || {};
     if (currentQuestionIndex === 0) {
       return false;
     }
     return (
       <Link
         to={`/survey/${prevQuestion.identifier}`}
-        className="previous"
+        className="previous btn btn-default"
       >
         Previous
       </Link>
@@ -77,22 +76,24 @@ export class Survey extends React.Component<ISurveyProps, any> {
 
   nextBtn() {
     const { survey, currentQuestionIndex } = this.props;
-    const currentQuestion = survey[currentQuestionIndex];
-    const nextQuestion = survey[currentQuestionIndex + 1];
+    const currentQuestion = survey[currentQuestionIndex] || {};
+    const nextQuestion = survey[currentQuestionIndex + 1] || {};
     if ((survey.length - 1) === currentQuestionIndex) {
       return (
         <Link
           to={'/surveyDetails'}
-          className="detailslink"
+          className={classnames("detailslink", 'btn', 'btn-primary', 'float-right', {
+            'disable': (currentQuestion.required && !(currentQuestion.answer))
+          })}
         >
-          Details
+          Submit
         </Link>
       );
     }
     return (
       <Link
         to={`/survey/${nextQuestion.identifier}`}
-        className={classnames('next', {
+        className={classnames('next', 'btn', 'btn-primary', 'float-right', {
           'disable': (currentQuestion.required && !(currentQuestion.answer))
         })}
       >
@@ -104,7 +105,7 @@ export class Survey extends React.Component<ISurveyProps, any> {
   progressBar() {
     const { currentQuestionIndex, survey } = this.props;
     const ProgressBarProps: IProgressBar = {
-      totalQuestions: survey.length,
+      totalQuestions: (survey || []).length,
       currentQuestion: currentQuestionIndex,
     }
     return (
@@ -115,15 +116,12 @@ export class Survey extends React.Component<ISurveyProps, any> {
   }
 
   render() {
-    const { loading, error, survey } = this.props;
-    if (loading || survey.length === 0) {
-      return <p>Fetching...</p>
-    }
+    const { error } = this.props;
     if (error) {
       return <p>Has Error</p>
     }
     return (
-      <div className={classnames('wrapper')}>
+      <div className="survey-container">
         {this.progressBar()}
         {this.displayCurrentQuetion()}
         {this.previousBtn()}
@@ -141,7 +139,7 @@ const mapStateToProps = (state: { surveyReducer: ISurveyState }, props: any): IS
     loading: state.surveyReducer.loading,
     error: state.surveyReducer.error,
     survey: state.surveyReducer.survey,
-    currentQuestionIndex: currentIndexFromIdentifier(state, identifier),
+    currentQuestionIndex: currentIndexFromIdentifier(state, identifier) || 0,
   };
 };
 

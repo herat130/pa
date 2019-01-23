@@ -2,15 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { allReducer } from './reducers';
+import { setLocalStore, accessStore } from './util/localStorage';
+
+// prevent clickjacking
+if (top == self) {
+  document.body.style.display = 'block';
+}
 
 const middleWare = applyMiddleware(thunk, logger);
-const store = createStore(allReducer, middleWare);
+
+// issue with preloaded state on page refresh?
+const persistedStore = accessStore();
+const store = createStore(allReducer, persistedStore, middleWare);
+
+store.subscribe(() => { setLocalStore({ surveyReducer: store.getState().surveyReducer }) });
 
 ReactDOM.render(
   <Provider store={store}>

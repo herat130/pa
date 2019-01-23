@@ -44,7 +44,7 @@ export default function (state = initialState, action: IActionType): ISurveyStat
       return Object.assign({}, state, {
         loading: true,
         error: false,
-        survey: null,
+        survey: [],
       });
     case FETCH_SURVEY_SUCESS:
       return Object.assign({}, state, {

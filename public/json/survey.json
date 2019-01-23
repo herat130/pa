@@ -17,7 +17,7 @@
       {
         "question_type": "text",
         "identifier": "2",
-        "question": "Whats your age?",
+        "question": "country ?",
         "description": null,
         "required": true,
         "multiple": false,
@@ -74,24 +74,34 @@
       {
         "question_type": "multiple-choice",
         "identifier": "5",
-        "question": "Fe-Male Hobbies?",
+        "question": "Favourite sports?",
         "description": null,
         "required": true,
         "multiple": true,
         "choices": [
           {
-            "label": "Music",
-            "value": "Music",
+            "label": "Soccer",
+            "value": "Soccer",
             "selected": false
           },
           {
-            "label": "Dance",
-            "value": "Dance",
+            "label": "Cricket",
+            "value": "Cricket",
             "selected": false
           },
           {
-            "label": "Style",
-            "value": "Style",
+            "label": "Basket Ball",
+            "value": "Basket Ball",
+            "selected": false
+          },
+          {
+            "label": "Tennis",
+            "value": "Tennis",
+            "selected": false
+          },
+          {
+            "label": "Base Ball",
+            "value": "Base Ball",
             "selected": false
           }
         ],
@@ -119,7 +129,6 @@
         "jumps": []
       }
     ],
-    
     "description": "Baisc Suurvey.",
     "category_name_hyphenated": "Basic Survey"
   }

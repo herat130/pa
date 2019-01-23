@@ -4,8 +4,7 @@ import Layout from './component/Layout';
 import ErrorComponent from './component/ErrorComponent';
 import Survey from './containers/Survey';
 import SurveyDetails from './containers/SurveyDetails';
-import 'milligram';
-import '../src/assets/styles/grid.scss';
+import 'bootstrap/dist/css/bootstrap.css';
 class App extends Component {
 
   render() {
